@@ -2,7 +2,6 @@ package models
 
 import (
 	"reflect"
-	"fmt"
 
 	"github.com/lucasmbaia/punctorum/api/models/interfaces"
 	"github.com/lucasmbaia/punctorum/api/models/decorators"
@@ -19,15 +18,43 @@ func NewResources(m interface{}) interfaces.Models {
 }
 
 func (r *Resources) Get(data interface{}) (response interface{}, err error) {
-	var args []reflect.Value
+	var (
+		args	[]reflect.Value
+		output	[]reflect.Value
+		v	reflect.Value
+		ok	bool
+	)
 
-	args = append(args, reflect.ValueOf(data))
-	r.Model.MethodByName("Get").Call(args)
+	v = reflect.ValueOf(data)
+	args = append(args, v)
+	output = r.Model.MethodByName("Get").Call(args)
 
-	fmt.Println("TA AQUI")
+	if err, ok = output[1].Interface().(error); ok {
+		return
+	}
+
+	response = output[0].Interface()
+
 	return
 }
 
 func (r *Resources) Post(data interface{}) (async bool, err error) {
+	var (
+		args	[]reflect.Value
+		output	[]reflect.Value
+		v	reflect.Value
+		ok	bool
+	)
+
+	v = reflect.ValueOf(data)
+	args = append(args, v)
+	output = r.Model.MethodByName("Post").Call(args)
+
+	if err, ok = output[1].Interface().(error); ok {
+		return
+	}
+
+	async = output[0].Interface().(bool)
+
 	return
 }

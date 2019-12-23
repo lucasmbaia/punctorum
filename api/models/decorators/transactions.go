@@ -1,7 +1,6 @@
 package decorators
 
 import (
-	"fmt"
 	"github.com/lucasmbaia/punctorum/api/models/interfaces"
 )
 
@@ -14,7 +13,11 @@ func NewTransaction(m interfaces.Models) interfaces.Models {
 }
 
 func (t *Transaction) Get(data interface{}) (response interface{}, err error) {
-	fmt.Println("Transaction")
-	t.Models.Get(data)
+	response, err = t.Models.Get(data)
+	return
+}
+
+func (t *Transaction) Post(data interface{}) (async bool, err error) {
+	async, err = t.Models.Post(data)
 	return
 }

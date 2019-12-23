@@ -2,21 +2,25 @@ package main
 
 import (
 	//"github.com/lucasmbaia/punctorum/api/models/interfaces"
-	"github.com/lucasmbaia/punctorum/api/models"
+	"github.com/gin-gonic/gin"
+	//"github.com/lucasmbaia/punctorum/api/models"
 	"github.com/lucasmbaia/punctorum/api/controllers"
 )
 
 func main() {
-	var users = controllers.NewUsers()
-	var data interface{}
+	var (
+		g     *gin.Engine
+		users *controllers.Users
+	)
 
-	data = models.UsersFields{
-		Name:	"lucas",
+	users = controllers.NewUsers()
+	g = gin.Default()
+
+	v1 := g.Group("/teste/:ID/users")
+	{
+		v1.GET("", users.Get)
+		v1.POST("", users.Post)
 	}
 
-	users.Get(data)
-	
-	//var m interfaces.Models = models.NewUsers()
-
-	//m.Get(data)
+	g.Run()
 }

@@ -16,7 +16,7 @@ func NewUsers() *Users {
 				return models.NewResources(models.NewUsers())
 			},
 			GetFields: func() interface{} {
-				return &models.Users{}
+				return &models.UsersFields{}
 			},
 		},
 	}

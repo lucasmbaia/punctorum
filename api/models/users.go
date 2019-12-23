@@ -1,10 +1,10 @@
 package models
 
 import (
-	"fmt"
 )
 
 type UsersFields struct {
+	ID	string	`json:",omitempty"`
 	Name	string	`json:",omitempty"`
 }
 
@@ -19,6 +19,14 @@ func NewUsers() *Users {
 }
 
 func (u *Users) Get(data interface{}) (users []UsersFields, err error) {
-	fmt.Println("users")
+	users = []UsersFields{
+		{ID:   "1234", Name: "lucas"},
+	}
+
+	return
+}
+
+func (u *Users) Post(data *UsersFields) (async bool, err error) {
+	data.ID = "9876"
 	return
 }
