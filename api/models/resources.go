@@ -5,16 +5,18 @@ import (
 
 	"github.com/lucasmbaia/punctorum/api/models/interfaces"
 	"github.com/lucasmbaia/punctorum/api/models/decorators"
+	"github.com/lucasmbaia/punctorum/api/repository/broker"
 )
 
 type Resources struct {
 	Model	reflect.Value
+	DB	broker.Brokers
 }
 
 func NewResources(m interface{}) interfaces.Models {
 	var model = reflect.ValueOf(m)
 
-	return decorators.NewTransaction(&Resources{model})
+	return decorators.NewTransaction(&Resources{Model: model})
 }
 
 func (r *Resources) Get(data interface{}) (response interface{}, err error) {

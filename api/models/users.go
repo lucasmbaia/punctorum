@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/lucasmbaia/punctorum/api/repository/filter"
 )
 
 type UsersFields struct {
@@ -18,11 +19,8 @@ func NewUsers() *Users {
 	return users
 }
 
-func (u *Users) Get(data interface{}) (users []UsersFields, err error) {
-	users = []UsersFields{
-		{ID:   "1234", Name: "lucas"},
-	}
-
+func (u *Users) Get(filters []filter.Filters, args ...interface{}) (users []UsersFields, err error) {
+	err = u.DB.Read(filters, &users, args)
 	return
 }
 
